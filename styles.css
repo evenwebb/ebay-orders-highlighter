@@ -1,0 +1,191 @@
+/**
+ * Styles for highlighted order rows
+ */
+
+.ebay-highlight-total-column {
+    background-color: #ffcdd2 !important; /* Darker red */
+}
+
+.ebay-highlight-total-column:hover {
+    background-color: #ffebee !important; /* Lighter red on hover */
+}
+
+/* Special delivery orders - silver background */
+.ebay-highlight-special-delivery {
+    background-color: #a8a8a8 !important; /* Darker silver */
+}
+
+.ebay-highlight-special-delivery:hover {
+    background-color: #c0c0c0 !important; /* Lighter silver on hover */
+}
+
+/* Ensure all cells in the row are highlighted */
+.ebay-highlight-total-column td,
+.ebay-highlight-total-column th,
+.ebay-highlight-special-delivery td,
+.ebay-highlight-special-delivery th {
+    background-color: transparent !important;
+}
+
+/* Sticky bar at top of page */
+.ebay-highlighter-sticky-bar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 999999 !important; /* Very high z-index to appear above eBay header */
+    background-color: #ffebee !important; /* Light red background */
+    color: #d32f2f !important; /* Red text */
+    text-align: center !important;
+    padding: 12px 20px !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    border-bottom: 2px solid #d32f2f !important; /* Red border */
+}
+
+/* Settings button */
+.ebay-highlighter-settings-btn {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 9999 !important;
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 50% !important;
+    background-color: #1b5e20 !important;
+    color: #ffffff !important;
+    border: 2px solid #2e7d32 !important;
+    cursor: pointer !important;
+    font-size: 24px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s ease !important;
+}
+
+.ebay-highlighter-settings-btn:hover {
+    background-color: #2e7d32 !important;
+    transform: scale(1.1) !important;
+}
+
+/* Settings menu */
+.ebay-highlighter-settings-menu {
+    position: fixed !important;
+    bottom: 80px !important;
+    right: 20px !important;
+    z-index: 9998 !important;
+    background-color: #ffffff !important;
+    border: 2px solid #1b5e20 !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    min-width: 200px !important;
+}
+
+.ebay-highlighter-settings-menu label {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 14px !important;
+    color: #333 !important;
+}
+
+.ebay-highlighter-settings-menu input[type="checkbox"] {
+    width: 18px !important;
+    height: 18px !important;
+    cursor: pointer !important;
+}
+
+/* Select Tracking button */
+#ebay-select-tracking-btn,
+.ebay-select-tracking-container,
+#ebay-select-tracking-container {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+}
+
+#ebay-select-tracking-btn {
+    background-color: #3665F3 !important;
+    color: white !important;
+    border: 1px solid #3665F3 !important;
+    border-radius: 4px !important;
+    padding: 8px 16px !important;
+    cursor: pointer !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+}
+
+#ebay-select-tracking-btn:hover {
+    background-color: #2952CC !important;
+    border-color: #2952CC !important;
+}
+
+/* Hide any SVG icons in the Select Tracking button */
+#ebay-select-tracking-btn svg,
+#ebay-select-tracking-btn .icon,
+#ebay-select-tracking-container svg {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Special delivery popup notification */
+.ebay-special-delivery-popup {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 10001 !important;
+    background-color: #fff3e0 !important; /* Orange/amber background */
+    border: 3px solid #ff9800 !important; /* Orange border */
+    border-radius: 8px !important;
+    padding: 20px 30px 15px 30px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+    min-width: 300px !important;
+    max-width: 500px !important;
+    text-align: center !important;
+    animation: slideIn 0.3s ease-out !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.ebay-special-delivery-message {
+    font-size: 18px !important;
+    font-weight: bold !important;
+    color: #e65100 !important; /* Dark orange text */
+    margin-bottom: 15px !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+.ebay-special-delivery-close {
+    background-color: #ff9800 !important;
+    color: #ffffff !important;
+    border: none !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+    padding: 8px 24px !important;
+    border-radius: 4px !important;
+    transition: background-color 0.2s !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    margin-top: auto !important;
+}
+
+.ebay-special-delivery-close:hover {
+    background-color: #f57c00 !important; /* Darker orange on hover */
+}
+

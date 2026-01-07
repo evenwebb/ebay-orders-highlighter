@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "eBay Orders Highlighter",
+  "version": "1.0.0",
+  "description": "Highlights orders needing tracking (≥£9.90) and special delivery items. Includes quick selection button and order count display.",
+  "permissions": [
+    "https://www.ebay.co.uk/sh/ord/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.ebay.co.uk/sh/ord/*"
+      ],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "applications": {
+    "gecko": {
+      "id": "ebay-orders-highlighter@example.com"
+    }
+  }
+}
+
