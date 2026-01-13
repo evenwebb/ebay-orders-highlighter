@@ -19,11 +19,22 @@
     background-color: #c0c0c0 !important; /* Lighter silver on hover */
 }
 
+/* Duplicate buyer orders - green background */
+.ebay-highlight-duplicate-buyer {
+    background-color: #c8e6c9 !important; /* Light green */
+}
+
+.ebay-highlight-duplicate-buyer:hover {
+    background-color: #e8f5e9 !important; /* Lighter green on hover */
+}
+
 /* Ensure all cells in the row are highlighted */
 .ebay-highlight-total-column td,
 .ebay-highlight-total-column th,
 .ebay-highlight-special-delivery td,
-.ebay-highlight-special-delivery th {
+.ebay-highlight-special-delivery th,
+.ebay-highlight-duplicate-buyer td,
+.ebay-highlight-duplicate-buyer th {
     background-color: transparent !important;
 }
 
