@@ -436,8 +436,40 @@
         }
         
         // Update the count text and set color to red
-        stickyBar.textContent = barText;
-        stickyBar.style.color = '#d32f2f'; // Red color
+        // Use innerHTML to support filter buttons alongside text
+        stickyBar.innerHTML = '';
+        const textSpan = document.createElement('span');
+        textSpan.textContent = barText;
+        textSpan.style.color = '#d32f2f';
+        textSpan.style.marginRight = '16px';
+        stickyBar.appendChild(textSpan);
+
+        // Add quick-jump filter buttons
+        const filters = [
+            { label: 'Awaiting Shipment', param: 'status:AWAITING_SHIPMENT' },
+            { label: 'Paid Shipped', param: 'status:PAID_SHIPPED' },
+            { label: 'All Orders', param: 'status:ALL_ORDERS' }
+        ];
+
+        const currentFilter = new URL(window.location.href).searchParams.get('filter') || '';
+
+        filters.forEach(({ label, param }) => {
+            const btn = document.createElement('button');
+            btn.textContent = label;
+            btn.style.cssText = 'margin: 0 4px; padding: 4px 12px; font-size: 13px; cursor: pointer; '
+                + 'border: 1px solid #ccc; border-radius: 4px; background: #fff; color: #333;';
+            if (currentFilter === param) {
+                btn.style.background = '#d32f2f';
+                btn.style.color = '#fff';
+                btn.style.borderColor = '#d32f2f';
+            }
+            btn.addEventListener('click', () => {
+                const url = new URL(window.location.href);
+                url.searchParams.set('filter', param);
+                window.location.href = url.toString();
+            });
+            stickyBar.appendChild(btn);
+        });
     }
 
     /**
