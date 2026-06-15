@@ -7,8 +7,11 @@
 (function() {
     'use strict';
 
-    const THRESHOLD = 9.90;
-    const DISPLAY_THRESHOLD = 9.99; // Keep GUI display as 9.99
+    // Allow threshold override via URL param: ?ebay_highlight_threshold=5.00
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramThreshold = parseFloat(urlParams.get('ebay_highlight_threshold'));
+    const THRESHOLD = !isNaN(paramThreshold) && paramThreshold > 0 ? paramThreshold : 9.90;
+    const DISPLAY_THRESHOLD = Math.ceil(THRESHOLD * 100) / 100; // Auto-derived from threshold
     const HIGHLIGHT_CLASS = 'ebay-highlight-total-column';
     const SPECIAL_DELIVERY_CLASS = 'ebay-highlight-special-delivery';
     const DUPLICATE_BUYER_CLASS = 'ebay-highlight-duplicate-buyer';
@@ -87,7 +90,6 @@
         
         // Remove currency symbols, spaces, and other non-numeric characters except digits, dots, and commas
         let cleaned = priceText.trim()
-            .replace(/£/g, '')
             .replace(/[^\d.,]/g, '');
         
         // Handle comma as thousands separator (UK format)
@@ -405,7 +407,8 @@
                 stickyBar.remove();
             }
             // Remove padding from body
-            document.body.style.paddingTop = '';
+            const savedPadding = stickyBar ? stickyBar.dataset.originalPadding || '0px' : '0px';
+            document.body.style.paddingTop = savedPadding;
             return;
         }
         
@@ -416,7 +419,10 @@
             stickyBar.className = 'ebay-highlighter-sticky-bar';
             document.body.insertBefore(stickyBar, document.body.firstChild);
             
-            // Add padding to body to account for sticky bar
+            // Save original padding and apply (fix #32)
+            if (!stickyBar.dataset.originalPadding) {
+                stickyBar.dataset.originalPadding = document.body.style.paddingTop || '0px';
+            }
             document.body.style.paddingTop = '44px';
         }
         
@@ -615,7 +621,8 @@
 
         try {
             // Use cached table if still valid, otherwise find it
-            if (!cachedTable || !document.contains(cachedTable)) {
+            // Validate cache — table may have been replaced via innerHTML (fix #28)
+            if (!cachedTable || !cachedTable.isConnected || !document.contains(cachedTable)) {
                 cachedTable = findOrdersTable();
                 // Reset column indices when table changes
                 if (cachedTable) {
@@ -1080,7 +1087,7 @@
      */
     function selectOrdersNeedingTracking() {
         // Find the orders table (not the summary table)
-        if (!cachedTable || !document.contains(cachedTable)) {
+        if (!cachedTable || !cachedTable.isConnected || !document.contains(cachedTable)) {
             cachedTable = findOrdersTable();
             // Reset column indices when table changes
             if (cachedTable) {
@@ -1262,18 +1269,12 @@
                             
                             setTimeout(() => {
                                 if (checkbox.checked !== shouldBeChecked) {
-                                    // Strategy 3: Direct property + events
+                                    // Strategy 3: Direct property set (last resort)
                                     try {
                                         checkbox.checked = shouldBeChecked;
-                                        ['input', 'change', 'click'].forEach(eventType => {
-                                            const event = eventType === 'click'
-                                                ? new MouseEvent('click', { bubbles: true, cancelable: false, view: window })
-                                                : new Event(eventType, { bubbles: true, cancelable: false });
-                                            checkbox.dispatchEvent(event);
-                                        });
                                         
                                         if (checkbox.checked !== shouldBeChecked) {
-                                            console.warn(`eBay Highlighter: Failed to update checkbox ${index}. Current: ${checkbox.checked}, Expected: ${shouldBeChecked}`);
+                                        console.warn(`eBay Highlighter: Failed to update checkbox ${index}. Current: ${checkbox.checked}, Expected: ${shouldBeChecked}`);
                                         }
                                     } catch (e) {
                                         console.error(`eBay Highlighter: Error in property manipulation for checkbox ${index}:`, e);
@@ -1671,8 +1672,7 @@
         // Watch document body for listbox__value elements (they can appear in various places)
         navObserver.observe(document.body, {
             childList: true,
-            subtree: true,
-            characterData: true // Watch for text content changes
+            subtree: true
         });
 
         // Watch for URL changes (SPA navigation) - throttled
@@ -1690,6 +1690,8 @@
                     cachedSubtotalIndex = -1;
                     
                     // Check flags for new URL
+                    // Reset SD counter on navigation (fix #30)
+                    lastSpecialDeliveryCount = -1;
                     const flags = getFeatureFlags();
                     if (!flags.enabled) {
                         // Clean up if we're on a page that shouldn't have the extension
