@@ -15,9 +15,7 @@
     let isProcessing = false;
     
     // Special delivery detection
-    const USE_TEST_MODE = false; // Set to false for production (use "Awaiting express delivery")
-    // For debugging: use "All orders" to test with actual count on page
-    const SPECIAL_DELIVERY_TEXT = USE_TEST_MODE ? 'Awaiting dispatch' : 'Awaiting express delivery';
+    const SPECIAL_DELIVERY_TEXT = 'Awaiting express delivery';
     let lastSpecialDeliveryCount = -1;
     
     /**
@@ -617,7 +615,6 @@
             let foundSDCount = 0; // Track how many SD items we've found
             
             // Detect duplicate buyers first (on AWAITING_SHIPMENT and ALL_ORDERS pages)
-            const flags = getFeatureFlags();
             let duplicateBuyerRows = new Set();
             let duplicateBuyersInfo = null;
             
@@ -778,7 +775,7 @@
                     return;
                 }
                 
-                // Detect duplicate buyers first (on AWAITING_SHIPMENT and ALL_ORDERS pages)
+                // Detect duplicate buyers
                 let fallbackDuplicateBuyerRows = new Set();
                 let fallbackDuplicateBuyersInfo = null;
                 

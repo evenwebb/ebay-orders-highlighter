@@ -56,58 +56,6 @@
     border-bottom: 2px solid #d32f2f !important; /* Red border */
 }
 
-/* Settings button */
-.ebay-highlighter-settings-btn {
-    position: fixed !important;
-    bottom: 20px !important;
-    right: 20px !important;
-    z-index: 9999 !important;
-    width: 48px !important;
-    height: 48px !important;
-    border-radius: 50% !important;
-    background-color: #1b5e20 !important;
-    color: #ffffff !important;
-    border: 2px solid #2e7d32 !important;
-    cursor: pointer !important;
-    font-size: 24px !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition: all 0.2s ease !important;
-}
-
-.ebay-highlighter-settings-btn:hover {
-    background-color: #2e7d32 !important;
-    transform: scale(1.1) !important;
-}
-
-/* Settings menu */
-.ebay-highlighter-settings-menu {
-    position: fixed !important;
-    bottom: 80px !important;
-    right: 20px !important;
-    z-index: 9998 !important;
-    background-color: #ffffff !important;
-    border: 2px solid #1b5e20 !important;
-    border-radius: 8px !important;
-    padding: 12px !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
-    min-width: 200px !important;
-}
-
-.ebay-highlighter-settings-menu label {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-    font-size: 14px !important;
-    color: #333 !important;
-}
-
-.ebay-highlighter-settings-menu input[type="checkbox"] {
-    width: 18px !important;
-    height: 18px !important;
-    cursor: pointer !important;
-}
-
 /* Select Tracking button */
 #ebay-select-tracking-btn,
 .ebay-select-tracking-container,
